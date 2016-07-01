@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kong
+  labels:
+    name: kong
+spec:
+  type: NodePort
+  ports:
+    - name: kong1
+      port: 8000
+      targetPort: 8000
+    - name: kong2
+      port: 8443
+      targetPort: 8443
+    - name: kong3
+      port: 8001
+      targetPort: 8001
+    - name: kong4
+      port: 7946
+      protocol: UDP
+      targetPort: 7946
+    - name: kong5
+      port: 7946
+      targetPort: 7946
+  selector:
+    name: kong
