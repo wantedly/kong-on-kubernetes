@@ -11,6 +11,11 @@ services:
     image: koudaiii/kong
     environment:
       - DATABASE=postgres
+      - POSTGRES_HOST=kong-database
+      - POSTGRES_PORT=5432
+      - POSTGRES_DATABASE=kong
+      - POSTGRES_USER=kong
+      - POSTGRES_PASSWORD=
     ports:
       - 8000:8000
       - 8443:8443
