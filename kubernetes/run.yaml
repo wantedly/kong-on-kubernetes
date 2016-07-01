@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    name: kong
+  name: kong
+spec:
+  containers:
+    - name: kong
+      image: koudaiii/kong
+      ports:
+        - containerPort: 8000
+          name: kong1
+        - containerPort: 8443
+          name: kong2
+        - containerPort: 8001
+          name: kong3
+        - containerPort: 7946
+          name: kong4
+          protocol: UDP
+        - containerPort: 7946
+          name: kong5
+      env:
+        - name: DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: kong
+              key: database
+        - name: POSTGRES_HOST
+          valueFrom:
+            secretKeyRef:
+              name: kong
+              key: postgres-host
+        - name: POSTGRES_PORT
+          valueFrom:
+            secretKeyRef:
+              name: kong
+              key: postgres-port
+        - name: POSTGRES_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: kong
+              key: postgres-database
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: kong
+              key: postgres-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: kong
+              key: postgres-password
