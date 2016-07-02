@@ -16,6 +16,10 @@ services:
       - POSTGRES_DATABASE=kong
       - POSTGRES_USER=kong
       - POSTGRES_PASSWORD=
+      - CLUSTER_IP=
+      - CLUSTER_PORT=
+      - ADVERTISE_IP=
+      - ADBERTISE_PORT=
     ports:
       - 8000:8000
       - 8443:8443
