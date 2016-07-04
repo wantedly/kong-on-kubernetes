@@ -10,16 +10,16 @@ spec:
       image: koudaiii/kong
       ports:
         - containerPort: 8000
-          name: kong1
+          name: http
         - containerPort: 8443
-          name: kong2
+          name: https
         - containerPort: 8001
-          name: kong3
+          name: admin
         - containerPort: 7946
-          name: kong4
+          name: cluster
+        - containerPort: 7946
           protocol: UDP
-        - containerPort: 7946
-          name: kong5
+          name: cluster-udp
       env:
         - name: DATABASE
           valueFrom:
