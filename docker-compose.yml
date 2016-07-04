@@ -10,16 +10,20 @@ services:
   kong:
     image: koudaiii/kong
     environment:
-      - DATABASE=postgres
-      - POSTGRES_HOST=kong-database
-      - POSTGRES_PORT=5432
-      - POSTGRES_DATABASE=kong
-      - POSTGRES_USER=kong
-      - POSTGRES_PASSWORD=
+      - DNS_RESOLVER=
+      - DNS_IP=
+      - DNS_PORT=
+      - DNSMASQ_PORT=
       - CLUSTER_IP=
       - CLUSTER_PORT=
       - ADVERTISE_IP=
       - ADBERTISE_PORT=
+      - DATABASE=postgres
+      - POSTGRES_HOST=
+      - POSTGRES_PORT=
+      - POSTGRES_DATABASE=
+      - POSTGRES_USER=
+      - POSTGRES_PASSWORD=
     ports:
       - 8000:8000
       - 8443:8443
