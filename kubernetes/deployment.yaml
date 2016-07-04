@@ -31,6 +31,46 @@ spec:
             protocol: UDP
             name: cluster-udp
         env:
+          - name: DNS_RESOLVER
+            valueFrom:
+              secretKeyRef:
+                name: kong
+                key: dns-resolver
+          - name: DNS_IP
+            valueFrom:
+              secretKeyRef:
+                name: kong
+                key: dns-ip
+          - name: DNS_PORT
+            valueFrom:
+              secretKeyRef:
+                name: kong
+                key: dns-port
+          - name: DNSMASQ_PORT
+            valueFrom:
+              secretKeyRef:
+                name: kong
+                key: dnsmasq-port
+          - name: CLUSTER_IP
+            valueFrom:
+              secretKeyRef:
+                name: kong
+                key: cluster-ip
+          - name: CLUSTER_PORT
+            valueFrom:
+              secretKeyRef:
+                name: kong
+                key: cluster-port
+          - name: ADVERTISE_IP
+            valueFrom:
+              secretKeyRef:
+                name: kong
+                key: advertise-ip
+          - name: ADBERTISE_PORT
+            valueFrom:
+              secretKeyRef:
+                name: kong
+                key: advertise-port
           - name: DATABASE
             valueFrom:
               secretKeyRef:
