@@ -7,21 +7,21 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - name: kong1
+    - name: proxy-listen
       port: 8000
       targetPort: 8000
-    - name: kong2
+    - name: proxy-listen-ssl
       port: 8443
       targetPort: 8443
-    - name: kong3
+    - name: admin-api-listen
       port: 8001
       targetPort: 8001
-    - name: kong4
+    - name: cluster-communication
+      port: 7946
+      targetPort: 7946
+    - name: cluster-communication-udp
       port: 7946
       protocol: UDP
-      targetPort: 7946
-    - name: kong5
-      port: 7946
       targetPort: 7946
   selector:
     name: kong
