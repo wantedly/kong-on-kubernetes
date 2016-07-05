@@ -16,12 +16,5 @@ spec:
     - name: admin-api-listen
       port: 8001
       targetPort: 8001
-    - name: cluster-communication
-      port: 7946
-      targetPort: 7946
-    - name: cluster-communication-udp
-      port: 7946
-      protocol: UDP
-      targetPort: 7946
   selector:
     name: kong

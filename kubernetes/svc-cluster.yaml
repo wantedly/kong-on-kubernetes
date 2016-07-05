@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kong-cluster
+  labels:
+    name: kong
+spec:
+  type: NodePort
+  ports:
+    - name: cluster-communication
+      port: 7946
+      targetPort: 7946
+    - name: cluster-communication-udp
+      port: 7946
+      protocol: UDP
+      targetPort: 7946
+  selector:
+    name: kong
