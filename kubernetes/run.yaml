@@ -5,9 +5,11 @@ metadata:
     name: kong
   name: kong
 spec:
+  imagePullSecrets:
+    - name: wantedlybotkey
   containers:
     - name: kong
-      image: koudaiii/kong
+      image: quay.io/wantedly/kong
       ports:
         - containerPort: 8000
           name: http

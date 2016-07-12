@@ -15,8 +15,10 @@ spec:
       labels:
         name: kong
     spec:
+      imagePullSecrets:
+        - name: wantedlybotkey
       containers:
-      - image: koudaiii/kong
+      - image: quay.io/wantedly/kong
         name: kong
         ports:
           - containerPort: 8000
