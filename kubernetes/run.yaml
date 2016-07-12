@@ -5,6 +5,8 @@ metadata:
     name: kong
   name: kong
 spec:
+  imagePullSecrets:
+    - name: wantedlybotkey
   containers:
     - name: kong
       image: quay.io/wantedly/kong
