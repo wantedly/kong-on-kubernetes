@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: wantedlybotkey
+data:
+  .dockerconfigjson: <%= ENV["QUAY_TOKEN"] %>
+type: kubernetes.io/dockerconfigjson
