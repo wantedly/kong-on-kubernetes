@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: kong
-      image: koudaiii/kong
+      image: wantedly/kong
       ports:
         - containerPort: 8000
           name: http

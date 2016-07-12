@@ -16,7 +16,7 @@ spec:
         name: kong
     spec:
       containers:
-      - image: koudaiii/kong
+      - image: wantedly/kong
         name: kong
         ports:
           - containerPort: 8000
