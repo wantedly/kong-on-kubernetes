@@ -6,9 +6,11 @@ services:
       - POSTGRES_USER=kong
       - POSTGRES_DB=kong
     ports:
-      - 5432:5432
+      - 5432
   kong:
     image: koudaiii/kong
+    depends_on:
+      - kong-database
     environment:
       - DNS_RESOLVER=
       - DNS_IP=
