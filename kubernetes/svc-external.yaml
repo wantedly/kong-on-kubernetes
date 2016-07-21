@@ -7,14 +7,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - name: proxy-listen
-      port: 8000
-      targetPort: 8000
     - name: proxy-listen-ssl
-      port: 8443
+      port: 443
       targetPort: 8443
-    - name: admin-api-listen
-      port: 8001
-      targetPort: 8001
   selector:
     name: kong
