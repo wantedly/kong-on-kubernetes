@@ -7,6 +7,9 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
+    - name: proxy-listen
+      port: 80
+      targetPort: 8000
     - name: proxy-listen-ssl
       port: 443
       targetPort: 8443
