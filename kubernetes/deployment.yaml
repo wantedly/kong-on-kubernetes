@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: kong
+  namespace: kong
   labels:
     name: kong
 spec:
@@ -15,10 +16,8 @@ spec:
       labels:
         name: kong
     spec:
-      imagePullSecrets:
-        - name: wantedlybotkey
       containers:
-      - image: quay.io/wantedly/kong
+      - image: mashape/kong:0.9.0
         name: kong
         ports:
           - containerPort: 8000
@@ -33,73 +32,57 @@ spec:
             protocol: UDP
             name: cluster-udp
         env:
-          - name: DNS_RESOLVER
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: dns-resolver
-          - name: DNS_IP
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: dns-ip
-          - name: DNS_PORT
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: dns-port
-          - name: DNSMASQ_PORT
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: dnsmasq-port
-          - name: CLUSTER_IP
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: cluster-ip
-          - name: CLUSTER_PORT
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: cluster-port
-          - name: ADVERTISE_IP
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: advertise-ip
-          - name: ADBERTISE_PORT
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: advertise-port
-          - name: DATABASE
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: database
-          - name: POSTGRES_HOST
+          - name: KONG_LOG_LEVEL
+            value: notice
+          - name: KONG_PROXY_LISTEN
+            value: 0.0.0.0:8000
+          - name: KONG_PROXY_LISTEN_SSL
+            value: 0.0.0.0:8443
+          - name: KONG_ADMIN_LISTEN
+            value: 0.0.0.0:8001
+          - name: KONG_DATABASE
+            value: postgres
+          - name: KONG_PG_HOST
             valueFrom:
               secretKeyRef:
                 name: kong
                 key: postgres-host
-          - name: POSTGRES_PORT
+          - name: KONG_PG_PORT
             valueFrom:
               secretKeyRef:
                 name: kong
                 key: postgres-port
-          - name: POSTGRES_DATABASE
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: postgres-database
-          - name: POSTGRES_USER
+          - name: KONG_PG_USER
             valueFrom:
               secretKeyRef:
                 name: kong
                 key: postgres-user
-          - name: POSTGRES_PASSWORD
+          - name: KONG_PG_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: kong
                 key: postgres-password
+          - name: KONG_PG_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: kong
+                key: postgres-database
+          - name: KONG_CLUSTER_LISTEN
+            valueFrom:
+              secretKeyRef:
+                name: kong
+                key: cluster-listen
+          - name: KONG_CLUSTER_ADVERTISE
+            valueFrom:
+              secretKeyRef:
+                name: kong
+                key: cluster-advertise
+          - name: KONG_CLUSTER_PROFILE
+            value: wan
+          - name: KONG_DNSMASQ
+            value: 'off'
+          - name: KONG_DNS_RESOLVER
+            valueFrom:
+              secretKeyRef:
+                name: kong
+                key: dns-ip
