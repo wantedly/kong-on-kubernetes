@@ -8,24 +8,30 @@ services:
     ports:
       - 5432
   kong:
-    image: quay.io/wantedly/kong
+    image: mashape/kong:0.9.0
     depends_on:
       - kong-database
     environment:
-      - DNS_RESOLVER=
-      - DNS_IP=
-      - DNS_PORT=
-      - DNSMASQ_PORT=
-      - CLUSTER_IP=
-      - CLUSTER_PORT=
-      - ADVERTISE_IP=
-      - ADBERTISE_PORT=
-      - DATABASE=postgres
-      - POSTGRES_HOST=
-      - POSTGRES_PORT=
-      - POSTGRES_DATABASE=
-      - POSTGRES_USER=
-      - POSTGRES_PASSWORD=
+      - KONG_LOG_LEVEL=notice
+      - KONG_CUSTOM_PLUGINS=
+      - KONG_PROXY_LISTEN=0.0.0.0:8000
+      - KONG_PROXY_LISTEN_SSL=0.0.0.0:8443
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001
+      - KONG_DATABASE=postgres
+      - KONG_PG_HOST=kong-database
+      - KONG_PG_PORT=5432
+      - KONG_PG_USER=kong
+      - KONG_PG_PASSWORD=
+      - KONG_PG_DATABASE=kong
+      - KONG_PG_SSL=
+      - KONG_CLUSTER_LISTEN=0.0.0.0:7946
+      - KONG_CLUSTER_LISTEN_RPC=127.0.0.1:7373
+      - KONG_CLUSTER_ADVERTISE=
+      - KONG_CLUSTER_ENCRYPT_KEY=
+      - KONG_CLUSTER_TTL_ON_fAILURE=60
+      - KONG_CLUSTER_PROFILE=local
+      - KONG_DNSMASQ=on
+      - KONG_DNSMASQ_PORT=8053
     ports:
       - 8000:8000
       - 8443:8443
