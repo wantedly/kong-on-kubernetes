@@ -1,3 +1,4 @@
+.bundle
 .env
 kubernetes/create-secret.sh
 kubernetes/quay.yaml
