@@ -9,7 +9,7 @@ spec:
   minReadySeconds: 30
   strategy:
     type: RollingUpdate
-  replicas: 1
+  replicas: 5
   template:
     metadata:
       name: kong
