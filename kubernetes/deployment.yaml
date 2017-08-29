@@ -42,47 +42,10 @@ spec:
             value: 0.0.0.0:8001
           - name: KONG_DATABASE
             value: postgres
-          - name: KONG_PG_HOST
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: postgres-host
-          - name: KONG_PG_PORT
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: postgres-port
-          - name: KONG_PG_USER
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: postgres-user
-          - name: KONG_PG_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: postgres-password
-          - name: KONG_PG_DATABASE
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: postgres-database
-          - name: KONG_CLUSTER_LISTEN
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: cluster-listen
-          - name: KONG_CLUSTER_ADVERTISE
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: cluster-advertise
           - name: KONG_CLUSTER_PROFILE
             value: wan
           - name: KONG_DNSMASQ
             value: 'off'
-          - name: KONG_DNS_RESOLVER
-            valueFrom:
-              secretKeyRef:
-                name: kong
-                key: dns-ip
+        envFrom:
+        - secretRef:
+            name: dotenv
