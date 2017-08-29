@@ -26,6 +26,5 @@ $ kubectl create -f kubernetes/deployment.yaml
 ## Console
 
 ```bash
-
 $ script/k8s-console
 ```
