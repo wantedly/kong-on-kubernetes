@@ -1,7 +1,7 @@
 kong-on-kubernetes
 ---
 
-* Make kong Cluster in Kubernetes
+* Make kong Cluster on Kubernetes
 * Using AWS RDS
 
 ## Develop
