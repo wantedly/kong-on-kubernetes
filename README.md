@@ -22,3 +22,10 @@ $ bundle exec ruby config.rb
 $ sh script/create-secret.sh
 $ kubectl create -f kubernetes/deployment.yaml
 ```
+
+## Console
+
+```bash
+
+$ script/k8s-console
+```
