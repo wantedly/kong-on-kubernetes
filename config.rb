@@ -3,5 +3,5 @@ require 'dotenv'
 
 Dotenv.load
 
-erb = File.open('kubernetes/create-secret.sh.erb') { |f| ERB.new(f.read) }
-File.write('kubernetes/create-secret.sh', erb.result(binding))
+erb = File.open('script/create-secret.sh.erb') { |f| ERB.new(f.read) }
+File.write('script/create-secret.sh', erb.result(binding))

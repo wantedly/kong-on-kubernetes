@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+set -eu
+set -o pipefail
+
+NAME="$(awk '{ print tolower($0) }' <<< "$USER")"
+NAME="${NAME}-$(date '+%Y%m%d%H%M%s')"
+
+TEMPFILE="$(mktemp)"
+
+COLUMNS=`tput cols`
+LINES=`tput lines`
+TERM=xterm
+
+if [ $# -ne 1 ]; then
+  echo "Please specify namespace."
+  exit 1
+fi
+
+NAMESPACE=$1
+RUN_YAML='./kubernetes/run.yaml'
+
+create_pod() {
+  cat $RUN_YAML | sed "s,{USER},$NAME,g" > "$TEMPFILE"
+  kubectl create -f "$TEMPFILE" --namespace=$NAMESPACE
+}
+
+destroy_pod() {
+  kubectl delete po $NAME --namespace=$NAMESPACE
+}
+
+wait_for_up() {
+  while true ; do
+    sleep 2
+    echo "Waiting for container to up..."
+    kubectl get po $NAME --namespace=$NAMESPACE | grep Running > /dev/null 2>&1 && break
+  done
+}
+
+enter_to_pod() {
+  kubectl exec -it $NAME env COLUMNS=$COLUMNS LINES=$LINES TERM=$TERM /bin/bash --namespace=$NAMESPACE
+}
+
+at_exit() {
+  rm "$TEMPFILE"
+  destroy_pod
+}
+
+main() {
+  create_pod
+
+  trap at_exit EXIT
+  trap 'trap - EXIT; at_exit; exit -1' SIGHUP SIGINT SIGTERM
+
+  wait_for_up
+  enter_to_pod
+}
+main

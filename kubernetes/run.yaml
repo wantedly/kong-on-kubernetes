@@ -3,93 +3,46 @@ kind: Pod
 metadata:
   labels:
     name: kong
-  name: kong
+  name: {USER}
 spec:
-  imagePullSecrets:
-    - name: wantedlybotkey
+  restartPolicy: Never
   containers:
-    - name: kong
-      image: quay.io/wantedly/kong
-      ports:
-        - containerPort: 8000
-          name: http
-        - containerPort: 8443
-          name: https
-        - containerPort: 8001
-          name: admin
-        - containerPort: 7946
-          name: cluster
-        - containerPort: 7946
-          protocol: UDP
-          name: cluster-udp
-      env:
-        - name: DNS_RESOLVER
-          valueFrom:
-            secretKeyRef:
-              name: kong
-              key: dns-resolver
-        - name: DNS_IP
-          valueFrom:
-            secretKeyRef:
-              name: kong
-              key: dns-ip
-        - name: DNS_PORT
-          valueFrom:
-            secretKeyRef:
-              name: kong
-              key: dns-port
-        - name: DNSMASQ_PORT
-          valueFrom:
-            secretKeyRef:
-              name: kong
-              key: dnsmasq-port
-        - name: CLUSTER_IP
-          valueFrom:
-            secretKeyRef:
-              name: kong
-              key: cluster-ip
-        - name: CLUSTER_PORT
-          valueFrom:
-            secretKeyRef:
-              name: kong
-              key: cluster-port
-        - name: ADVERTISE_IP
-          valueFrom:
-            secretKeyRef:
-              name: kong
-              key: advertise-ip
-        - name: ADBERTISE_PORT
-          valueFrom:
-            secretKeyRef:
-              name: kong
-              key: advertise-port
-        - name: DATABASE
-          valueFrom:
-            secretKeyRef:
-              name: kong
-              key: database
-        - name: POSTGRES_HOST
-          valueFrom:
-            secretKeyRef:
-              name: kong
-              key: postgres-host
-        - name: POSTGRES_PORT
-          valueFrom:
-            secretKeyRef:
-              name: kong
-              key: postgres-port
-        - name: POSTGRES_DATABASE
-          valueFrom:
-            secretKeyRef:
-              name: kong
-              key: postgres-database
-        - name: POSTGRES_USER
-          valueFrom:
-            secretKeyRef:
-              name: kong
-              key: postgres-user
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: kong
-              key: postgres-password
+  - image: kong:0.9.0
+    imagePullPolicy: Always
+    command:
+      - bash
+    name: {USER}
+    stdin: true
+    stdinOnce: true
+    terminationMessagePath: /dev/termination-log
+    tty: true
+    ports:
+      - containerPort: 8000
+        name: http
+      - containerPort: 8443
+        name: https
+      - containerPort: 8001
+        name: admin
+      - containerPort: 7946
+        name: cluster
+      - containerPort: 7946
+        protocol: UDP
+        name: cluster-udp
+    env:
+      - name: KONG_LOG_LEVEL
+        value: notice
+      - name: KONG_PROXY_LISTEN
+        value: 0.0.0.0:8000
+      - name: KONG_PROXY_LISTEN_SSL
+        value: 0.0.0.0:8443
+      - name: KONG_ADMIN_LISTEN
+        value: 0.0.0.0:8001
+      - name: KONG_DATABASE
+        value: postgres
+      - name: KONG_CLUSTER_PROFILE
+        value: wan
+      - name: KONG_DNSMASQ
+        value: 'off'
+    envFrom:
+    - secretRef:
+        name: dotenv
